@@ -4,6 +4,7 @@
 package java5775_5366_9373Web;
 
 import java.nio.charset.Charset;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -22,6 +23,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.codehaus.jackson.map.ObjectMapper;
 
 import com.google.gson.Gson;
+import com.sun.org.apache.bcel.internal.generic.SIPUSH;
 
 import entities.*;
 import entities.enums.*;
@@ -167,12 +169,13 @@ public class DatabaseService implements Backend
 
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public void addDoctor(Doctor doctor) throws Exception
 	{
-		Gson gson = new Gson();
-		String result = POST(URL + "addDoctor",
-				gson.toJson(doctor, Doctor.class));
+		ObjectMapper objectMapper = new ObjectMapper();
+		objectMapper.getSerializationConfig().setDateFormat(new SimpleDateFormat("yyyy-MM-dd"));
+		String result = POST(URL + "addDoctor", objectMapper.writeValueAsString(doctor));
 		if (!result.equals("success"))
 			throw new Exception("Connection Problems");
 
@@ -212,12 +215,13 @@ public class DatabaseService implements Backend
 
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public void addPatient(Patient patient) throws Exception
 	{
-		Gson gson = new Gson();
-		String result = POST(URL + "addPatient",
-				gson.toJson(patient, Patient.class));
+		ObjectMapper objectMapper = new ObjectMapper();
+		objectMapper.getSerializationConfig().setDateFormat(new SimpleDateFormat("yyyy-MM-dd"));
+		String result = POST(URL + "addPatient", objectMapper.writeValueAsString(patient));
 		if (!result.equals("success"))
 			throw new Exception("Connection Problems");
 
@@ -235,12 +239,13 @@ public class DatabaseService implements Backend
 
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public void addPrescription(Prescription prescription) throws Exception
 	{
-		Gson gson = new Gson();
-		String result = POST(URL + "addPrescription",
-				gson.toJson(prescription, Prescription.class));
+		ObjectMapper objectMapper = new ObjectMapper();
+		objectMapper.getSerializationConfig().setDateFormat(new SimpleDateFormat("yyyy-MM-dd"));
+		String result = POST(URL + "addPrescription", objectMapper.writeValueAsString(prescription));
 		if (!result.equals("success"))
 			throw new Exception("Connection Problems");
 
@@ -376,12 +381,13 @@ public class DatabaseService implements Backend
 
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public void updateDoctor(Doctor doctor) throws Exception
 	{
-		Gson gson = new Gson();
-		String result = POST(URL + "updateDoctor",
-				gson.toJson(doctor, Doctor.class));
+		ObjectMapper objectMapper = new ObjectMapper();
+		objectMapper.getSerializationConfig().setDateFormat(new SimpleDateFormat("yyyy-MM-dd"));
+		String result = POST(URL + "updateDoctor", objectMapper.writeValueAsString(doctor));
 		if (!result.equals("success"))
 			throw new Exception("Connection Problems");
 
@@ -436,12 +442,13 @@ public class DatabaseService implements Backend
 
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public void updatePatient(Patient patient) throws Exception
 	{
-		Gson gson = new Gson();
-		String result = POST(URL + "updatePatient",
-				gson.toJson(patient, Patient.class));
+		ObjectMapper objectMapper = new ObjectMapper();
+		objectMapper.getSerializationConfig().setDateFormat(new SimpleDateFormat("yyyy-MM-dd"));
+		String result = POST(URL + "updatePatient", objectMapper.writeValueAsString(patient));
 		if (!result.equals("success"))
 			throw new Exception("Connection Problems");
 	}
@@ -458,12 +465,13 @@ public class DatabaseService implements Backend
 
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public void updatePrescription(Prescription prescription) throws Exception
 	{
-		Gson gson = new Gson();
-		String result = POST(URL + "updatePrescription",
-				gson.toJson(prescription, Prescription.class));
+		ObjectMapper objectMapper = new ObjectMapper();
+		objectMapper.getSerializationConfig().setDateFormat(new SimpleDateFormat("yyyy-MM-dd"));
+		String result = POST(URL + "updatePrescription", objectMapper.writeValueAsString(prescription));
 		if (!result.equals("success"))
 			throw new Exception("Connection Problems");
 	}
@@ -545,7 +553,7 @@ public class DatabaseService implements Backend
 	public ArrayList<Patient> getPatientList() throws Exception
 	{
 		ObjectMapper objectMapper = new ObjectMapper();
-		String result = GET(URL + "getDoctorList");
+		String result = GET(URL + "getPatientList");
 		objectMapper.getDeserializationConfig().setDateFormat(dateFormat);
 		return new ArrayList<Patient>(Arrays.asList(objectMapper.readValue(result, Patient[].class)));
 	}
