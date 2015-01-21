@@ -36,7 +36,7 @@
 				</tr>
 				<tr>
 					<td style="text-align: center;"><select name="doctorGender"
-						style="width: 100%" type="text"><option value="MALE">זכר</option>
+						style="width: 100%"><option value="MALE">זכר</option>
 							<option value="FEMALE">נקבה</option></select></td>
 					<td style="text-align: right; width: 100px">מין</td>
 				</tr>
@@ -67,7 +67,7 @@
 				</tr>
 				<tr>
 					<td style="text-align: center;"><select
-						name="doctorSpecialization" style="width: 100%" type="text"><option
+						name="doctorSpecialization" style="width: 100%"><option
 								value="FAMILY">משפחה</option>
 							<option value="DENTIST">שיניים</option>
 							<option value="SURGEY">מנתח</option></select></td>
@@ -84,14 +84,14 @@
 		<%
 			DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 
-			Long doctorID;
+			long doctorID;
 			String doctorFirstName;
 			String doctorLastName;
 			Gender doctorGender;
 			Date doctorDoB;
 			String doctorEmailAddress;
 			Date doctorDoJ;
-			Float doctorSallary;
+			float doctorSallary;
 			String doctorPhoneNumber;
 			Specialization doctorSpecialization;
 
