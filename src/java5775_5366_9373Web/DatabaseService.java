@@ -22,6 +22,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.codehaus.jackson.map.ObjectMapper;
 
 import com.google.gson.Gson;
+
 import entities.*;
 import entities.enums.*;
 import entities.json.*;
@@ -170,6 +171,7 @@ public class DatabaseService implements Backend
 	@Override
 	public void addDoctor(Doctor doctor) throws Exception
 	{
+		// when dealing with dates gson is awful. use better ObjectMapper instead.
 		ObjectMapper objectMapper = new ObjectMapper();
 		objectMapper.getSerializationConfig().setDateFormat(new SimpleDateFormat("yyyy-MM-dd"));
 		String result = POST(URL + "addDoctor", objectMapper.writeValueAsString(doctor));
@@ -216,6 +218,7 @@ public class DatabaseService implements Backend
 	@Override
 	public void addPatient(Patient patient) throws Exception
 	{
+		// when dealing with dates gson is awful. use better ObjectMapper instead.
 		ObjectMapper objectMapper = new ObjectMapper();
 		objectMapper.getSerializationConfig().setDateFormat(new SimpleDateFormat("yyyy-MM-dd"));
 		String result = POST(URL + "addPatient", objectMapper.writeValueAsString(patient));
@@ -240,6 +243,7 @@ public class DatabaseService implements Backend
 	@Override
 	public void addPrescription(Prescription prescription) throws Exception
 	{
+		// when dealing with dates gson is awful. use better ObjectMapper instead.
 		ObjectMapper objectMapper = new ObjectMapper();
 		objectMapper.getSerializationConfig().setDateFormat(new SimpleDateFormat("yyyy-MM-dd"));
 		String result = POST(URL + "addPrescription", objectMapper.writeValueAsString(prescription));
@@ -249,15 +253,25 @@ public class DatabaseService implements Backend
 	}
 
 	@SuppressWarnings("deprecation")
-	@Override
-	public void addTreatment(Treatment treatment) throws Exception
+	public long addTreatment(Treatment treatment) throws Exception
 	{
+		long id;
+		
+		// when dealing with dates gson is awful. use better ObjectMapper instead.
 		ObjectMapper objectMapper = new ObjectMapper();
 		objectMapper.getSerializationConfig().setDateFormat(new SimpleDateFormat("yyyy-MM-dd"));
 		String result = POST(URL + "addTreatment", objectMapper.writeValueAsString(treatment));
-		if (!result.equals("success"))
-			throw new Exception(result);
-
+		
+		try
+		{
+			id = Long.valueOf(result);
+			return id;
+		}
+		
+		catch (NumberFormatException e)
+		{
+			throw new Exception("Connection Problem");
+		}
 	}
 
 	@Override
@@ -383,6 +397,7 @@ public class DatabaseService implements Backend
 	@Override
 	public void updateDoctor(Doctor doctor) throws Exception
 	{
+		// when dealing with dates gson is awful. use better ObjectMapper instead.
 		ObjectMapper objectMapper = new ObjectMapper();
 		objectMapper.getSerializationConfig().setDateFormat(new SimpleDateFormat("yyyy-MM-dd"));
 		String result = POST(URL + "updateDoctor", objectMapper.writeValueAsString(doctor));
@@ -444,6 +459,7 @@ public class DatabaseService implements Backend
 	@Override
 	public void updatePatient(Patient patient) throws Exception
 	{
+		// when dealing with dates gson is awful. use better ObjectMapper instead.
 		ObjectMapper objectMapper = new ObjectMapper();
 		objectMapper.getSerializationConfig().setDateFormat(new SimpleDateFormat("yyyy-MM-dd"));
 		String result = POST(URL + "updatePatient", objectMapper.writeValueAsString(patient));
@@ -467,6 +483,7 @@ public class DatabaseService implements Backend
 	@Override
 	public void updatePrescription(Prescription prescription) throws Exception
 	{
+		// when dealing with dates gson is awful. use better ObjectMapper instead.
 		ObjectMapper objectMapper = new ObjectMapper();
 		objectMapper.getSerializationConfig().setDateFormat(new SimpleDateFormat("yyyy-MM-dd"));
 		String result = POST(URL + "updatePrescription", objectMapper.writeValueAsString(prescription));
@@ -478,6 +495,7 @@ public class DatabaseService implements Backend
 	@Override
 	public void updateTreatment(Treatment treatment) throws Exception
 	{
+		// when dealing with dates gson is awful. use better ObjectMapper instead.
 		ObjectMapper objectMapper = new ObjectMapper();
 		objectMapper.getSerializationConfig().setDateFormat(new SimpleDateFormat("yyyy-MM-dd"));
 		String result = POST(URL + "updateTreatment", objectMapper.writeValueAsString(treatment));
@@ -521,6 +539,7 @@ public class DatabaseService implements Backend
 	@Override
 	public ArrayList<Doctor> getDoctorList() throws Exception
 	{
+		// when dealing with dates gson is awful. use better ObjectMapper instead.
 		ObjectMapper objectMapper = new ObjectMapper();
 		String result = GET(URL + "getDoctorList");
 		objectMapper.getDeserializationConfig().setDateFormat(dateFormat);
@@ -551,6 +570,7 @@ public class DatabaseService implements Backend
 	@Override
 	public ArrayList<Patient> getPatientList() throws Exception
 	{
+		// when dealing with dates gson is awful. use better ObjectMapper instead.
 		ObjectMapper objectMapper = new ObjectMapper();
 		String result = GET(URL + "getPatientList");
 		objectMapper.getDeserializationConfig().setDateFormat(dateFormat);
@@ -582,6 +602,7 @@ public class DatabaseService implements Backend
 	public Prescription getConectorPrescription(long treatmentID,
 			long medicineID) throws Exception
 	{
+		// when dealing with dates gson is awful. use better ObjectMapper instead.
 		ObjectMapper objectMapper = new ObjectMapper();
 		String result = GET(URL + "getConectorPrescription?treatmentID="
 				+ treatmentID + "&medicineID=" + medicineID);
